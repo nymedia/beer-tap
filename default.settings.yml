@@ -1,0 +1,5 @@
+# Keg map is a info which channel by which keg
+keg_map:
+  # Format is "1: 1" and that means that first channel is taken by keg with
+  # kid = 1
+  1: ''
