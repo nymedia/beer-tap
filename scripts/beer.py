@@ -26,4 +26,4 @@ class Beer(object):
     return TRUE
 
   def __create__(keg, user):
-    db.execute("INSERT INTO beer VALUES (NULL, ?, ?)", (keg.kid, user.uid))
+    
