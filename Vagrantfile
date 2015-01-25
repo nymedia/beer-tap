@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
   config.vm.network :private_network, ip: '192.168.50.50' # IMPORTANT: Look out for collisions
   config.ssh.forward_agent = true
 
-  config.vm.synced_folder "../", "/project", id: "project-folder",
+  config.vm.synced_folder "./", "/project", id: "project-folder",
     nfs: true
 
   config.vm.provider :virtualbox do |vb|
