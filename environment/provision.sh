@@ -53,7 +53,7 @@ if [ ! -d "/opt/provisioned" ]; then
   # Add drush
   git clone https://github.com/drush-ops/drush.git /usr/local/src/drush
   cd /usr/local/src/drush
-  git checkout 6.x  #or whatever version you want.
+  git checkout master  #or whatever version you want.
   ln -s /usr/local/src/drush/drush /usr/bin/drush
   composer install
   drush --version

@@ -48,7 +48,7 @@ RUN find /etc/php5/cli/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN ln -s /usr/local/bin/composer /usr/bin/composer
-RUN wget https://github.com/drush-ops/drush/archive/6.x.zip && unzip 6.x.zip && mv drush-6.x /usr/local/src/drush
+RUN wget https://github.com/drush-ops/drush/archive/master.zip && unzip master.zip && mv drush-master /usr/local/src/drush
 RUN cd /usr/local/src/drush && composer install
 RUN ln -s /usr/local/src/drush/drush /usr/bin/drush
 
