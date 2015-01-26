@@ -22,12 +22,12 @@ if [ ! -d /project/drupal/sites/default ]; then
   cd /project/drupal
 
   # Create basic module containers
-  mkdir -p /project/drupal/sites/all/modules/contrib
-  mkdir -p /project/drupal/sites/all/modules/custom
-  mkdir -p /project/drupal/sites/all/drush
+  mkdir -p /project/drupal/modules/contrib
+  mkdir -p /project/drupal/modules/custom
+  mkdir -p /project/drupal/drush
 
   # Symlink to drushrc inside sites/all/drush
-  ln -s ../../../../drush/drushrc.php /project/drupal/sites/all/drush/drushrc.php
+  ln -s ../../drush/drushrc.php /project/drupal/drush/drushrc.php
 
   # Download usefull modules
   drush dl fpa, module_filter, coffee, stage_file_proxy, devel, search_krumo -y --destination=sites/all/modules/contrib
