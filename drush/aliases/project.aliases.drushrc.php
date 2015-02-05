@@ -24,10 +24,10 @@ $aliases['main'] = array(
 // use '-o StrictHostKeyChecking=no' to make new environment accessible for start.sh
 $aliases['staging'] = array(
   'parent' => '@main',
-  // 'uri' => '', // i.e. www.example.com
-  // 'root' => '', // i.e. /var/www/example.com
-  // 'remote-host' => '', // i.e. dev.example.com
-  // 'ssh-options' => '-o StrictHostKeyChecking=no', // i.e. -p 23  -o StrictHostKeyChecking=no
+  'uri' => 'beer-tap.cloud1.piaseccy.pl', // i.e. www.example.com
+  'root' => '/project/drupal', // i.e. /var/www/example.com
+  'remote-host' => 'beer-tap.cloud1.piaseccy.pl', // i.e. dev.example.com
+  'ssh-options' => '-o StrictHostKeyChecking=no', // i.e. -p 23  -o StrictHostKeyChecking=no
 );
 
 $aliases['prod'] = array(
