@@ -4,26 +4,22 @@ class Beer(object):
 
   def __load__(self, bid):
     # Load data from sqlite database
-    db.execute("SELECT * FROM beer WHERE bid = '%d'" % bid)
-    val = db.fetchone();
-    self.BID = val.bid;
-    self.User
 
     # check if loaded correctly
     try:
       self.BID
     except NameError:
-      return FALSE
+      return False
     else:
-      return TRUE
+      return True
 
   def __save__(self):
     # Store data in database
-    return TRUE
+    return True
 
   def __pour__(self):
     # open valve and bump timer.
-    return TRUE
+    return True
 
   def __create__(keg, user):
-    
+    return False;

@@ -30,6 +30,7 @@ drupal/sites/*/private
 *.exe
 *.o
 *.so
+*.pyc
 
 # Packages #
 ############
