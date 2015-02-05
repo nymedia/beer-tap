@@ -11,6 +11,6 @@ class User(object):
 
     # check if loaded correctly
     if (r.status_code == 204):
-      return TRUE
-    else
-      return FALSE
+      return True
+    else:
+      return False
