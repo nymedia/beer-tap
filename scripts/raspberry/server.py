@@ -6,13 +6,15 @@ import range
 import valve
 import neopixel
 import sound
+import camera
 
 from user import User
 from beer import Beer
 from keg import Keg
 
-RANGE = 9
+RANGE = 8
 TO_START = 5
+MAX_TIME = 2
 
 def start():
   # debug
@@ -27,9 +29,16 @@ def start():
   # open valve
   valve.on()
 
+  # start timer
+  timer = time.time()
+  is_t = 1
+  is_r = 1
+
   # and wait...
-  while range.get(0) < RANGE:
+  while (is_r and is_t):
     time.sleep(0.01)
+    is_r = range.get(0) < RANGE
+    # is_t = (time.time() - timer) < MAX_TIME
 
   stop()
 
@@ -46,7 +55,8 @@ def stop():
   # change animation
   neopixel.close()
 
-  # play music
+  # take picture
+  camera.take()
 
   # turn off lights
   neopixel.off()
@@ -55,10 +65,11 @@ def stop():
   # and go to main loop
   return True
 
-def main(argv):
+def main():
 
   # set initial data
   i = 0
+  stop()
 
   while True:
 
@@ -94,4 +105,4 @@ def main(argv):
       start()
 
 if __name__ == "__main__":
-   main(sys.argv[1:])
+   main()

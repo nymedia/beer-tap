@@ -13,4 +13,4 @@ def on():
 	GPIO.output(VALVE, True)
 
 def off():
-	GPIO.output(VALVE, True)
+	GPIO.output(VALVE, False)
