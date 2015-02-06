@@ -3,6 +3,9 @@
 import time, sys
 import requests
 import range
+import valve
+import neopixel
+import sound
 
 from user import User
 from beer import Beer
@@ -15,12 +18,14 @@ def start():
   # debug
   print 'Start'
 
-  # play music
-
   # turn on lights
+  neopixel.throbber()
+
+  # play music
+  sound.play('vendor/private/foley_sports_drinking_bottle_fill_with_water_from_tap.mp3');
 
   # open valve
-
+  valve.on()
 
   # and wait...
   while range.get(0) < RANGE:
@@ -33,12 +38,18 @@ def stop():
   print 'Stop'
 
   # close valve
+  valve.off()
+
+  # play sound
+  sound.play('vendor/private/smb_coin.wav');
 
   # change animation
+  neopixel.close()
 
   # play music
 
   # turn off lights
+  neopixel.off()
 
 
   # and go to main loop
@@ -52,11 +63,18 @@ def main(argv):
   while True:
 
     val = range.get(0)
-    if val < RANGE:
-      # debug
-      print 'Counting'
+
+    if val == 1:
 
       # play animation
+      neopixel.loading()
+
+      # increment
+      i += 1
+
+    elif val < RANGE:
+      # debug
+      print 'Counting'
 
       # increment
       i += 1
@@ -67,6 +85,7 @@ def main(argv):
       print 'Reset'
 
       # stop animation
+      neopixel.off()
 
       # reset variable
       i = 0

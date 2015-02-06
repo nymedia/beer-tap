@@ -5,6 +5,7 @@ drupal/sites/*/settings*.php
 drupal/sites/*/services*.yml
 drush/local.aliases.drushrc.php
 drush/local.drushrc.php
+scripts/raspberry/vendor/private
 settings.yml
 
 # PHPStorm user sensitive files #
