@@ -2,7 +2,7 @@
 #include <Adafruit_NeoPixel.h>
 
 // Open this header file to configure the NeoPixel i2c driver
-#include "i2cneopixels.h"
+#include "trinket.h"
 
 // Neo KHZ400 is necessary on the 8Mhz Trinket
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXELS, PIN, PIXEL_COLOR_MODE + NEO_KHZ800);
@@ -40,7 +40,7 @@ void handleCommand(uint8_t NumBytes)
 {
   mode = TinyWireS.receive();
   
-  if (mode == CMD_ALL_OFF) interrupt = true;
+  interrupt = true;
   
   NumBytes--;
   
