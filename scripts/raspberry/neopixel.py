@@ -13,7 +13,7 @@ i2c = smbus.SMBus(1)
 def send(command):
   error = 1
   while error == 1:
-    try :
+    try:
        print 'Sending data: ', command
        i2c.write_i2c_block_data(I2C_ADDRESS, 0xFF, [command])
        error = 0
