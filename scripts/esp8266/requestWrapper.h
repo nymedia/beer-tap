@@ -1,59 +1,58 @@
+String cssBase() {
+  /*!
+  Pure v0.6.0
+  Copyright 2014 Yahoo! Inc. All rights reserved.
+  Licensed under the BSD License.
+  https://github.com/yahoo/pure/blob/master/LICENSE.md
+  */
+  /*!
+  normalize.css v^3.0 | MIT License | git.io/normalize
+  Copyright (c) Nicolas Gallagher and Jonathan Neal
+  */
+  /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+  String s = "html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}.hidden,[hidden]{display:none!important}.pure-img{max-width:100%;height:auto;display:block}";
+  return s;
+}
+
+String jsBase() {
+  String s = "";
+//  s += "function refreshNetworks() {$.ajax({url:'/availableNetworks',cache:false}).done(function(html){$('#available-networks').html(html);});};\n";
+//  s += "$(document).ready(function() {\n";
+//  s += "console.log('ready!');\n";
+//  s += "refreshNetworks();\n";
+//  s += "$('#available-networks-refresh').on('click', refreshNetworks);\n";
+//  s += "});\n";
+  s += "function ajax(path, id) {\nvar xmlhttp;\nxmlhttp=new XMLHttpRequest();\nxmlhttp.onreadystatechange=function(){if (xmlhttp.readyState==4 && xmlhttp.status==200){document.getElementById(id).innerHTML=xmlhttp.responseText;}};\nxmlhttp.open('GET',path,true);\nxmlhttp.send();\n};\n";
+  s += "window.onload = function (){";
+  s += "ajax('/component/header', 'header');\n";
+  s += "ajax('/component/footer', 'footer');\n";
+  s += "document.getElementById('refresh-available-networks').addEventListener('click', function() {ajax('/component/networks', 'available-networks')});";
+  s += "}";
+  return s;
+}
+
+
 String htmlDocument(String body) {
   // Prepare the response
-  String s = "<!DOCTYPE HTML>\r\n<html>\r\n<head>";
+  String s = "<!DOCTYPE HTML>\r\n<html><head>";
   s += "<title>Manage device</title>";
-  s += "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.0/css/materialize.min.css'>";
   s += "<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'/>";
+  s += "<link rel='stylesheet' href='/base.css'>";
+  s += "<link rel='stylesheet' href='http://yui.yahooapis.com/pure/0.6.0/pure-min.css'>";
+  s += "<script type='text/javascript' src='/base.js'></script>";
+  s += "<script>\n";
+
+  s += "</script>\n";
   s += "</head><body>";
+  s += "<div id='header'></div>";
   
-  // Navbar
-  s += "<div class='navbar'><nav><div class='nav-wrapper container'><a href='#!' class='brand-logo'>Manage device</a><ul class='right hide-on-med-and-down'><li>";
-  if (WiFi.status() == WL_CONNECTED) {
-    s += "<a class='tooltipped' data-position='bottom' data-delay='50' data-tooltip='";
-    IPAddress ip = WiFi.localIP();
-    s += "IP: ";
-    s += String(ip[0]) + "." + String(ip[1]) + "." + String(ip[2]) + "." + String(ip[3]);
-    s += ", SSID: ";
-    s += WiFi.SSID();
-    s += "'><i class='mdi-device-signal-wifi-4-bar'></i></a>";
-  }
-  else {
-    s += "<i class='mdi-device-signal-wifi-off'></i>";
-  }
-  s += "</li></ul></div></nav></div>";
   // Content
   s += "<div class='container'>";
-  s += body;  
-  s += "<script type='text/javascript' src='https://code.jquery.com/jquery-2.1.1.min.js'></script>";
-  s += "<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.0/js/materialize.min.js'></script>";
+  s += body;
   s += "</div>";
-  
-  // Footer
-  s += "<footer class='page-footer'>";
-  s += "<div class='container'>";
-  s += "<div class='row'>";
-  s += "<div class='col l6 s12'>";
-  s += "<h5 class='white-text'>About</h5>";
-  s += "<p class='grey-text text-lighten-4'>This device is a part of beer-tap system.</p>";
-  s += "</div>";
-  s += "<div class='col l4 offset-l2 s12'>";
-  s += "<h5 class='white-text'>Links</h5>";
-  s += "<ul>";
-  s += "<li><a class='grey-text text-lighten-3' href='/'>Dashboard</a></li>";
-  s += "<li><a class='grey-text text-lighten-3' href='/networks'>Networks</a></li>";
-  s += "<li><a class='grey-text text-lighten-3' href='/onewire'>OneWire</a></li>";
-  s += "</ul>";
-  s += "</div>";
-  s += "</div>";
-  s += "</div>";
-  s += "<div class='footer-copyright'>";
-  s += "<div class='container'>";
-  s += "Proudly made by Ny Media AS";
-  s += "<a class='grey-text text-lighten-4 right' href='http://nymedia.no'>Ny Media</a>";
-  s += "</div>";
-  s += "</div>";
-  s += "</footer>";
-  s += "</body></html>\n";
+ 
+  s += "<div id='footer'></div>"; 
+  s += "</body></html>";
   
   return s;
 }
