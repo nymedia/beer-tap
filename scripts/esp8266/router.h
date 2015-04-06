@@ -1,5 +1,4 @@
 
-
 void routerDashboard() {
   String s = "<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>";
   server.send(200, "text/html", htmlDocument(s));
@@ -70,7 +69,9 @@ void routerSettings() {
   s += "</fieldset>";
   s += "<button class='pure-button pure-button-primary' type='submit' name='action'>Submit</button>";
   s += "</form>";
-  s += "<h4>Available networks:<i class='mdi-navigation-refresh right' id='refresh-available-networks' style='cursor: pointer;'>Refresh</i></h4>";
+  s += "<h4>Available networks:<a id='refresh-available-networks' style='cursor: pointer;'>Refresh";
+  s += getIcon(8);
+  s += "</a></h4>";
   s += "<div id='available-networks'></div>";
   s += "</div>";
   
@@ -86,14 +87,24 @@ void routerSettings() {
   server.send(200, "text/html", htmlDocument(s));
 }
 
+void routerOneWire() {
+  String s = "<h3>Available sensors:<a id='refresh-available-sensors' style='cursor: pointer;'>Refresh";
+  s += getIcon(8);
+  s += "</a></h3>";
+  s += "<div id='available-sensors'></div>";
+  s += "<script>ajax('/component/sensors', 'available-sensors');\n</script>";
+
+  server.send(200, "text/html", htmlDocument(s));
+}
+
 void routerNetworks() {
   String s = componentAvailableNetworks();
   server.send(200, "text/html", s);
 }
 
-void routerOneWire() {
-  String s = "";
-  server.send(200, "text/html", htmlDocument(s));
+void routerSensors() {
+  String s = componentAvailableSensors();
+  server.send(200, "text/html", s);
 }
 
 void routerHeader() {
@@ -106,12 +117,30 @@ void routerJs() {
   server.send(200, "application/javascript", s);
 }
 
-void routerCss() {
+void routerCssBase() {
   String s = cssBase();
+  server.send(200, "text/css", s);
+}
+
+void routerCssCustom() {
+  String s = cssCustom();
   server.send(200, "text/css", s);
 }
 
 void routerFooter() {
   String s = componentFooter();
   server.send(200, "text/html", s);
+}
+
+void routerPaths() {
+  server.on("/", routerDashboard);
+  server.on("/settings", routerSettings);
+  server.on("/onewire", routerOneWire);
+  server.on("/component/networks", routerNetworks);
+  server.on("/component/sensors", routerSensors);
+  server.on("/component/header", routerHeader);
+  server.on("/component/footer", routerFooter);
+  server.on("/base.css", routerCssBase);
+  server.on("/custom.css", routerCssCustom);
+  server.on("/base.js", routerJs); 
 }

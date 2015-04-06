@@ -1,3 +1,4 @@
+#include <OneWire.h>
 #include <ESP8266mDNS.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
@@ -10,19 +11,11 @@
 // Prepare module settings
 void setup() {
   Serial.begin(9600);
-  delay(10);
   
   // Run it in dual mode
   WiFi.mode(WIFI_AP_STA);
   
-  server.on("/", routerDashboard);
-  server.on("/settings", routerSettings);
-  server.on("/onewire", routerOneWire);
-  server.on("/component/networks", routerNetworks);
-  server.on("/component/header", routerHeader);
-  server.on("/component/footer", routerFooter);
-  server.on("/base.css", routerCss);
-  server.on("/base.js", routerJs);
+  routerPaths();
   
   // Start the server
   server.begin();
@@ -33,6 +26,9 @@ void setup() {
  
   // Print the IP address
   Serial.println(WiFi.softAPIP());
+  
+  // Retrive MAC address
+  WiFi.softAPmacAddress(mac);
 }
 
 // Main loop

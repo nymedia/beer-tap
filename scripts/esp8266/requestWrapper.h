@@ -14,19 +14,19 @@ String cssBase() {
   return s;
 }
 
+String cssCustom() {
+  String s = "*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}a{text-decoration:none;color:#3d92c9}a:focus,a:hover{text-decoration:underline}h3{font-weight:100}.pure-img-responsive{max-width:100%;height:auto}#layout{padding:0}.sidebar{background:#3d4f5d;color:#fff}header{margin:1em}header svg{fill:#ffffff; width: 64px; height:64px;}header .strength{float:right}.brand-tagline,.brand-title{margin:0}.brand-title{text-transform:uppercase}.brand-tagline{font-weight:300;color:#b0cadb}.content-subhead{text-transform:uppercase;color:#aaa;border-bottom:1px solid #eee;padding:.4em 0;font-size:80%;font-weight:500;letter-spacing:.1em}.content{padding:2em 1em 0}.footer{text-align:center;padding:1em 0}.footer a{color:#ccc;font-size:80%}.footer .pure-menu a:focus,.footer .pure-menu a:hover{background:0 0}@media (min-width:48em){.content{padding:2em 3em 0;margin-left:25%}.header{margin:80% 2em 0;text-align:right}.sidebar{position:fixed;top:0;bottom:0}}";
+  return s;
+}
+
 String jsBase() {
   String s = "";
-//  s += "function refreshNetworks() {$.ajax({url:'/availableNetworks',cache:false}).done(function(html){$('#available-networks').html(html);});};\n";
-//  s += "$(document).ready(function() {\n";
-//  s += "console.log('ready!');\n";
-//  s += "refreshNetworks();\n";
-//  s += "$('#available-networks-refresh').on('click', refreshNetworks);\n";
-//  s += "});\n";
   s += "function ajax(path, id) {\nvar xmlhttp;\nxmlhttp=new XMLHttpRequest();\nxmlhttp.onreadystatechange=function(){if (xmlhttp.readyState==4 && xmlhttp.status==200){document.getElementById(id).innerHTML=xmlhttp.responseText;}};\nxmlhttp.open('GET',path,true);\nxmlhttp.send();\n};\n";
-  s += "window.onload = function (){";
+  s += "window.onload = function (){\n";
   s += "ajax('/component/header', 'header');\n";
   s += "ajax('/component/footer', 'footer');\n";
-  s += "document.getElementById('refresh-available-networks').addEventListener('click', function() {ajax('/component/networks', 'available-networks')});";
+  s += "if (document.getElementById('refresh-available-networks') != null){document.getElementById('refresh-available-networks').addEventListener('click', function() {ajax('/component/networks', 'available-networks')});};\n";
+  s += "if (document.getElementById('refresh-available-sensors') != null){document.getElementById('refresh-available-sensors').addEventListener('click', function() {ajax('/component/sensors', 'available-sensors')});};\n";
   s += "}";
   return s;
 }
@@ -36,22 +36,30 @@ String htmlDocument(String body) {
   // Prepare the response
   String s = "<!DOCTYPE HTML>\r\n<html><head>";
   s += "<title>Manage device</title>";
-  s += "<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'/>";
+  s += "<meta charset='utf-8'>";
+  s += "<meta name='viewport' content='width=device-width, initial-scale=1.0'/>";
   s += "<link rel='stylesheet' href='/base.css'>";
+  s += "<link rel='stylesheet' href='/custom.css'>";
   s += "<link rel='stylesheet' href='http://yui.yahooapis.com/pure/0.6.0/pure-min.css'>";
+  s += "<link rel='stylesheet' href='http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css'>";
   s += "<script type='text/javascript' src='/base.js'></script>";
   s += "<script>\n";
 
   s += "</script>\n";
   s += "</head><body>";
-  s += "<div id='header'></div>";
+  s += "</div id='layout' class='pure-g'>";
+  s += "<div id='header' class='sidebar pure-u-1 pure-u-md-1-4'></div>";
   
   // Content
-  s += "<div class='container'>";
+  s += "<div id='main' class='content pure-u-1 pure-u-md-3-4'>";
   s += body;
-  s += "</div>";
  
-  s += "<div id='footer'></div>"; 
+  s += "<div id='footer' class=''></div>"; 
+
+  s += "</div>";
+
+  s += "</div>";
+
   s += "</body></html>";
   
   return s;
